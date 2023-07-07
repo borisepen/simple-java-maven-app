@@ -7,9 +7,11 @@ node {
             sh 'mvn test'
             junit 'target/surefire-reports/*.xml'
         }
+        stage('Manual Approval') {
+            input message: 'Lanjutkan ke tahap Deploy? (Klik "Proceed" untuk melanjutkan atau "Abort" untuk mengakhiri)'
+        }
         stage('Deploy') {
-            sh './jenkins/scripts/deliver.sh'
-            input message: 'Sudah selesai menggunakan Java App? (Klik "Proceed" untuk mengakhiri)'
+            sh './jenkins/scripts/deliver.sh'            
             sh './jenkins/scripts/kill.sh'
         }
     }
